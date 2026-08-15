@@ -31,7 +31,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
 
     protected virtual void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
     {
-        component.IsEquipped = args.SlotFlags.HasFlag(component.RequiredSlot);
+        component.IsEquipped = (args.SlotFlags & component.RequiredSlot) != SlotFlags.NONE; // ADT-Tweak
         Dirty(uid, component);
     }
 

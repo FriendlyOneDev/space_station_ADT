@@ -16,5 +16,5 @@ public sealed partial class HeadsetComponent : Component
     public bool IsEquipped = false;
 
     [DataField, AutoNetworkedField]
-    public SlotFlags RequiredSlot = SlotFlags.EARS;
+    public SlotFlags RequiredSlot = SlotFlags.EARS | SlotFlags.EARS2; // ADT-Tweak
 }
