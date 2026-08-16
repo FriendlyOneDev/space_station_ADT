@@ -341,6 +341,10 @@
           - Pill
           - Fruit # ADT-tweak: moths can eat fruit
           - ADTMothFriendlyFood # ADT-tweak: moths can eat bread, pancakes etc.
+      specialDigestibleBlacklist: # ADT-tweak: moths never eat meat
+        tags:
+          - Meat
+      digestNonTrashFood: true # ADT-tweak: moths eat any non-meat, non-junk food
 
 - type: entity
   parent: [OrganBaseLiver, OrganMothInternal, OrganAnimalMetabolizer] # ADT-tweak removed OrganSpriteHumanInternal

@@ -25,4 +25,20 @@ public sealed partial class StomachComponent : Component
     /// </summary>
     [DataField]
     public bool IsSpecialDigestibleExclusive = true;
+
+    // ADT-Tweak start
+    /// <summary>
+    /// Items matching this whitelist are never digestible by this stomach, overriding everything else
+    /// (e.g. moths reject anything tagged Meat).
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? SpecialDigestibleBlacklist = null;
+
+    /// <summary>
+    /// If true, this stomach also digests any ordinary food that leaves no trash when eaten (i.e. non-junk
+    /// food), in addition to <see cref="SpecialDigestible"/>. Used to let moths eat any non-meat, non-junk food.
+    /// </summary>
+    [DataField]
+    public bool DigestNonTrashFood = false;
+    // ADT-Tweak end
 }

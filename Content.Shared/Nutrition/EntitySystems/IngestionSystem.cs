@@ -198,6 +198,9 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             foreach (var ent in stomachs)
             {
+                // ADT-Tweak: a stomach that blacklists this food can't digest it (e.g. moths reject Meat)
+                if (_whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestibleBlacklist, food))
+                    continue;
                 // We need one stomach that can digest our special food.
                 if (_whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestible, food))
                     return true;
@@ -205,12 +208,17 @@ public sealed partial class IngestionSystem : EntitySystem
         }
         else
         {
+            var nonJunkFood = TryComp<EdibleComponent>(food, out var edibleFood) && edibleFood.Trash.Count == 0; // ADT-Tweak: non-junk food leaves no trash
             foreach (var ent in stomachs)
             {
-                // We need one stomach that can digest normal food.
+                // ADT-Tweak: a stomach that blacklists this food can't digest it (e.g. moths reject Meat)
+                if (_whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestibleBlacklist, food))
+                    continue;
+                // We need one stomach that can digest normal food (or any non-junk food, for moths). // ADT-Tweak
                 if (ent.Comp.SpecialDigestible == null
                     || !ent.Comp.IsSpecialDigestibleExclusive
-                    || _whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestible, food))
+                    || _whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestible, food)
+                    || (ent.Comp.DigestNonTrashFood && nonJunkFood)) // ADT-Tweak
                     return true;
             }
         }
@@ -233,6 +241,10 @@ public sealed partial class IngestionSystem : EntitySystem
         if (!ev.Digestible)
             return false;
 
+        // ADT-Tweak: stomach-level blacklist overrides everything (e.g. moths never digest Meat)
+        if (_whitelistSystem.IsWhitelistPass(stomach.Comp.SpecialDigestibleBlacklist, food))
+            return false;
+
         if (ev.Universal)
             return true;
 
@@ -240,6 +252,10 @@ public sealed partial class IngestionSystem : EntitySystem
             return _whitelistSystem.IsWhitelistPass(stomach.Comp.SpecialDigestible, food);
 
         if (stomach.Comp.SpecialDigestible == null || !stomach.Comp.IsSpecialDigestibleExclusive || _whitelistSystem.IsWhitelistPass(stomach.Comp.SpecialDigestible, food))
+            return true;
+
+        // ADT-Tweak: also digest ordinary non-junk food (leaves no trash when eaten), for moths etc.
+        if (stomach.Comp.DigestNonTrashFood && TryComp<EdibleComponent>(food, out var edibleFood) && edibleFood.Trash.Count == 0)
             return true;
 
         return false;
