@@ -277,7 +277,9 @@ public sealed partial class ChatSystem : SharedChatSystem
                 SendEntityWhisper(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker, language);  // ADT Languages
                 break;
             case InGameICChatType.Emote:
-                SendEntityEmote(source, sanitizedMessage, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);     // ADT Languages
+                // ADT-Tweak: не отправляем пустую эмоцию после сокращения
+                if (!string.IsNullOrEmpty(sanitizedMessage))
+                    SendEntityEmote(source, sanitizedMessage, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);     // ADT Languages
                 break;
         }
     }
