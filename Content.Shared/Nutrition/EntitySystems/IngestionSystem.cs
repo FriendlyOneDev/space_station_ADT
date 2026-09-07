@@ -198,6 +198,9 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             foreach (var ent in stomachs)
             {
+                // ADT-Tweak: чёрный список желудка важнее белого
+                if (_whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestibleBlacklist, food))
+                    continue;
                 // We need one stomach that can digest our special food.
                 if (_whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestible, food))
                     return true;
@@ -207,6 +210,9 @@ public sealed partial class IngestionSystem : EntitySystem
         {
             foreach (var ent in stomachs)
             {
+                // ADT-Tweak: чёрный список желудка важнее белого
+                if (_whitelistSystem.IsWhitelistPass(ent.Comp.SpecialDigestibleBlacklist, food))
+                    continue;
                 // We need one stomach that can digest normal food.
                 if (ent.Comp.SpecialDigestible == null
                     || !ent.Comp.IsSpecialDigestibleExclusive
@@ -235,6 +241,10 @@ public sealed partial class IngestionSystem : EntitySystem
 
         if (ev.Universal)
             return true;
+
+        // ADT-Tweak: чёрный список желудка важнее белого
+        if (_whitelistSystem.IsWhitelistPass(stomach.Comp.SpecialDigestibleBlacklist, food))
+            return false;
 
         if (ev.SpecialDigestion)
             return _whitelistSystem.IsWhitelistPass(stomach.Comp.SpecialDigestible, food);
