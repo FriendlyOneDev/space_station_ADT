@@ -130,7 +130,6 @@
   - type: Tag
     tags:
     - Pizza
-    - ReptilianFood
     - Meat
 # ADT-Tweak end
 
@@ -182,7 +181,6 @@
   - type: Tag
     tags:
     - Pizza
-    - ReptilianFood
     - Slice
     - Meat
 # ADT-Tweak end
