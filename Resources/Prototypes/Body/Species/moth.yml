@@ -348,7 +348,7 @@
           - ClothMade
           - Paper
           - Pill
-          # ADT-Tweak start: моли едят любую еду, кроме мяса
+          # ADT-Tweak start: моли едят любую еду, кроме мяса и снеков
           - Fruit
           - Vegetable
           - ADTMothFriendlyFood
@@ -356,6 +356,7 @@
       specialDigestibleBlacklist:
         tags:
           - Meat
+          - FoodSnack
       # ADT-Tweak end
 
 - type: entity
