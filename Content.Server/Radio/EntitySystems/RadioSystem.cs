@@ -200,7 +200,7 @@ public sealed class RadioSystem : EntitySystem
             ChatChannel.Radio,
             message,
             wrappedMessage,
-            NetEntity.Invalid,
+            GetNetEntity(messageSource), // ADT-Tweak: NetEntity.Invalid -> отправитель, чтобы клиент отличал свои сообщения
             null);
 
         // ADT Languages start
@@ -208,7 +208,7 @@ public sealed class RadioSystem : EntitySystem
             ChatChannel.Radio,
             message,
             wrappedEncodedMessage,
-            NetEntity.Invalid,
+            GetNetEntity(messageSource), // ADT-Tweak: NetEntity.Invalid -> отправитель
             null);
         // ADT Languages end
 
