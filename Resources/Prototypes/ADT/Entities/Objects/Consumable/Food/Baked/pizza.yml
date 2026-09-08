@@ -92,7 +92,6 @@
 
 
 
-# ADT-Tweak start: общие базы для пицц, мясные несут тег Meat
 - type: entity
   parent: FoodInjectableBase
   id: ADTFoodPizzaBase
@@ -131,7 +130,6 @@
     tags:
     - Pizza
     - Meat
-# ADT-Tweak end
 
 - type: entity
   parent: ADTFoodPizzaMeatBase
@@ -146,7 +144,6 @@
 
 
 
-# ADT-Tweak start: общие базы для кусков пиццы
 - type: entity
   parent: FoodInjectableBase
   id: ADTFoodPizzaSliceBase
@@ -183,7 +180,6 @@
     - Pizza
     - Slice
     - Meat
-# ADT-Tweak end
 
 - type: entity
   parent: ADTFoodPizzaMeatSliceBase
