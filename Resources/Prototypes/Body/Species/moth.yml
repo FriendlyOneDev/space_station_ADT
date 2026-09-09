@@ -212,14 +212,14 @@
         250: 0.7
     # ADT-tweak-start: restored moth-specific features
     - type: Sprite
-      scale: 0.92, 0.92
+      scale: 0.93, 0.93
     - type: DashAction
       actionProto: ADTActionDashMoth
     - type: SizeAttributeWhitelist # Frontier
       tall: true
-      tallscale: 1
+      tallscale: 0.99
       short: true
-      shortscale: 0.85
+      shortscale: 0.88
     - type: NightVision
       innate: true
       shader: ADTModernNightVisionShaderMedium
