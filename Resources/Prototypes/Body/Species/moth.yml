@@ -217,7 +217,7 @@
       actionProto: ADTActionDashMoth
     - type: SizeAttributeWhitelist # Frontier
       tall: true
-      tallscale: 0.99
+      tallscale: 1
       short: true
       shortscale: 0.88
     - type: NightVision
